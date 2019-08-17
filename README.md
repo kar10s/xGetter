@@ -16,24 +16,27 @@ Openload, Streamango တို႔လိုလင့္ေတြကေန
 ကိုယ္ပိုင္ Player နဲ႔တိုက္႐ိုက္ျပမလား
 အဆင္ေျပသလိုအသုံးခ်ႏိုင္ပါတယ္။
 ေလာလာဆယ္ပါဝင္တဲ့ Site ေတြကေတာ့
--  **Facebook**
--  **Google Drive**
--  **Google Photos**
--  **Openload**
--  **Streamango**
--  **MegaUp**
--  **Streamcherry**
--  **RapidVideo**
--  **Mp4Upload**
--  **VidCloud**
--  **SendVid** 
--  **Mediafire** 
--  **VK** 
--  **Ok.Ru**
--  **Youtube**
--  **Twitter**
--  **SolidFiles**
--  **Vidoza**
+
+ - **1. Openload**
+ - **2. FanSubs**
+ - **3. StreaMango**
+ - **4. RapidVideo**
+ - **5. StreamCherry**
+ - **6. Google Drive**
+ - **7. Uptobox**
+ - **8. Google Photos**
+ - **9. Mp4Upload**
+ - **10. Facebook**
+ - **11. Mediafire**
+ - **12. Ok.Ru**
+ - **13. VK**
+ - **14. Twitter**
+ - **15. Youtube**
+ - **16. SolidFiles**
+ - **17. Vidoza**
+ - **18. UptoStream**
+ - **19. SendVid**
+
 တို႔ပဲျဖစ္ပါတယ္။
 ဒီဆိုဒ္ေတြအားလုံးကေန ေၾကာ္ျငာၾကည့္စရာမလိုပဲတိုက္႐ိုက္လင့္ထုတ္ေပးမွာပါ။
 အျခားအခမဲ့ Video တင္လို႔ရတဲ့ Site ေတြကိုလည္းထပ္ျဖည့္ေပးသြားပါ့မယ္ :)
@@ -55,7 +58,7 @@ Openload, Streamango တို႔လိုလင့္ေတြကေန
 
     dependencies {
     ...............
-    implementation 'com.github.KhunHtetzNaing:xGetter:1.9.3'
+    implementation 'com.github.KhunHtetzNaing:xGetter:1.9.5'
     }
 
 **Android Studio** သမားေတြဆိုရင္ေတာ့ **Sync Now** လုပ္ေပးပါ။
@@ -98,6 +101,27 @@ Openload, Streamango တို႔လိုလင့္ေတြကေန
     
     xGetter.find("Video လင့္");
 
+## IMPORTANT
+Okhttp3 ကိုအသုံးျပုထားသည့္အတြက္
+**proguard-rules.pro** ထည့္ေပးရန္လိုအပ္ပါသည္။
+
+    # JSR 305 annotations are for embedding nullability information.
+    
+    -dontwarn javax.annotation.**
+    
+    # A resource is loaded with a relative path so the package of this class must be preserved.     
+    
+    -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+    
+    # Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+    
+    -dontwarn org.codehaus.mojo.animal_sniffer.*
+    
+    # OkHttp platform used only on JVM and when Conscrypt dependency is available.
+    
+    -dontwarn okhttp3.internal.platform.ConscryptPlatform
+
+
 အသုံးျပဳရတာလည္းလြယ္ပါတယ္ :)
 - Example APK => http://bit.ly/2TDvLQ2
 - Example Project => http://bit.ly/2Sr6Hiw
@@ -119,24 +143,27 @@ Openload, Streamango တို့လိုလင့်တွေကနေ
 ကိုယ်ပိုင် Player နဲ့တိုက်ရိုက်ပြမလား
 အဆင်ပြေသလိုအသုံးချနိုင်ပါတယ်။
 လောလာဆယ်ပါဝင်တဲ့ Site တွေကတော့
--  **Facebook**
--  **Google Drive**
--  **Google Photos**
--  **Openload**
--  **Streamango**
--  **MegaUp**
--  **Streamcherry**
--  **RapidVideo**
--  **Mp4Upload**
--  **VidCloud**
--  **SendVid**
--  **Mediafire**
--  **VK**
--  **Ok.Ru**
--  **Youtube**
--  **Twitter**
--  **SolidFiles**
--  **Vidoza**
+
+ - **1. Openload**
+ - **2. FanSubs**
+ - **3. StreaMango**
+ - **4. RapidVideo**
+ - **5. StreamCherry**
+ - **6. Google Drive**
+ - **7. Uptobox**
+ - **8. Google Photos**
+ - **9. Mp4Upload**
+ - **10. Facebook**
+ - **11. Mediafire**
+ - **12. Ok.Ru**
+ - **13. VK**
+ - **14. Twitter**
+ - **15. Youtube**
+ - **16. SolidFiles**
+ - **17. Vidoza**
+ - **18. UptoStream**
+ - **19. SendVid**
+
 တို့ပဲဖြစ်ပါတယ်။
 ဒီဆိုဒ်တွေအားလုံးကနေ ကြော်ငြာကြည့်စရာမလိုပဲတိုက်ရိုက်လင့်ထုတ်ပေးမှာပါ။
 အခြားအခမဲ့ Video တင်လို့ရတဲ့ Site တွေကိုလည်းထပ်ဖြည့်ပေးသွားပါ့မယ် :)
@@ -158,7 +185,7 @@ Openload, Streamango တို့လိုလင့်တွေကနေ
 
     dependencies {
     ...............
-    implementation 'com.github.KhunHtetzNaing:xGetter:1.9.3'
+    implementation 'com.github.KhunHtetzNaing:xGetter:1.9.5'
     }
 
 **Android Studio** သမားတွေဆိုရင်တော့ **Sync Now** လုပ်ပေးပါ။
@@ -200,6 +227,27 @@ Openload, Streamango တို့လိုလင့်တွေကနေ
             });
 
     xGetter.find("Video လင့်");
+
+## IMPORTANT
+Okhttp3 ကိုအသုံးပြုထားသည့်အတွက်
+**proguard-rules.pro** ထည့်ပေးရန်လိုအပ်ပါသည်။
+
+    # JSR 305 annotations are for embedding nullability information.
+    
+    -dontwarn javax.annotation.**
+    
+    # A resource is loaded with a relative path so the package of this class must be preserved.     
+    
+    -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+    
+    # Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+    
+    -dontwarn org.codehaus.mojo.animal_sniffer.*
+    
+    # OkHttp platform used only on JVM and when Conscrypt dependency is available.
+    
+    -dontwarn okhttp3.internal.platform.ConscryptPlatform
+
 
 အသုံးပြုရတာလည်းလွယ်ပါတယ် :)
 - Example APK => http://bit.ly/2TDvLQ2
