@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -32,10 +33,21 @@ import com.htetznaing.xgetterexample.Player.SimpleVideoPlayer;
 import com.htetznaing.xgetterexample.Utils.XDownloader;
 import com.htetznaing.xplayer.XPlayer;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     XGetter xGetter;
@@ -178,6 +190,22 @@ public class MainActivity extends AppCompatActivity {
         letGo("http://sendvid.com/3bh9588j");
     }
 
+    public void fEmbed(View view) {
+        letGo("https://www.fembed.com/v/53k5qudgx48m08g");
+    }
+
+    public void verystream(View view) {
+        letGo("https://verystream.com/stream/gLjiUKSiBp4");
+    }
+
+    public void filerio(View view){
+        letGo("https://filerio.in/lgdgftj4vpfn");
+    }
+
+    public void dailymotion(View view) {
+        letGo("https://www.dailymotion.com/video/xyt1t1");
+    }
+
     public boolean checkInternet() {
         boolean what = false;
         CheckInternet checkNet = new CheckInternet(this);
@@ -207,22 +235,14 @@ public class MainActivity extends AppCompatActivity {
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                            Intent intent = new Intent(getApplicationContext(), SimpleVideoPlayer.class);
-//                            intent.putExtra("url",finalUrl);
-//                            //If google drive you need to put cookie
-//                            if (xModel.getCookie()!=null){
-//                                intent.putExtra("cookie",xModel.getCookie());
-//                            }
-//                            startActivity(intent);
-                            watchVideo(xModel);
+                            watchDialog(xModel);
                         }
                     })
                     .setNegativeText("Download")
                     .onNegative(new MaterialDialog.SingleButtonCallback() {
                         @Override
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                            downloadFile(xModel);
-                            downloadWithADM(xModel);
+                            downloadDialog(xModel);
                         }
                     });
         }else {
@@ -239,6 +259,69 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
+        MaterialStyledDialog dialog = builder.build();
+        dialog.show();
+    }
+
+    private void watchDialog(XModel xModel){
+        MaterialStyledDialog.Builder builder = new MaterialStyledDialog.Builder(this);
+        builder.setTitle("Notice!")
+                .setDescription("Choose your player")
+                .setStyle(Style.HEADER_WITH_ICON)
+                .setIcon(R.drawable.right)
+                .withDialogAnimation(true)
+                .setPositiveText("Simple Exoplayer")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Intent intent = new Intent(getApplicationContext(), SimpleVideoPlayer.class);
+                            intent.putExtra("url",xModel.getUrl());
+                            //If google drive you need to put cookie
+                            if (xModel.getCookie()!=null){
+                                intent.putExtra("cookie",xModel.getCookie());
+                            }
+                            startActivity(intent);
+                    }
+                })
+                .setNegativeText("PIP")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        watchVideo(xModel);
+                    }
+                })
+                .setNeutralText("MXPlayer")
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        openWithMXPlayer(xModel);
+                    }
+                });
+        MaterialStyledDialog dialog = builder.build();
+        dialog.show();
+    }
+
+    private void downloadDialog(XModel xModel){
+        MaterialStyledDialog.Builder builder = new MaterialStyledDialog.Builder(this);
+        builder.setTitle("Notice!")
+                .setDescription("Choose your downloader")
+                .setStyle(Style.HEADER_WITH_ICON)
+                .setIcon(R.drawable.right)
+                .withDialogAnimation(true)
+                .setPositiveText("Built in downloader")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        downloadFile(xModel);
+                    }
+                })
+                .setNegativeText("ADM")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        downloadWithADM(xModel);
+                    }
+                });
         MaterialStyledDialog dialog = builder.build();
         dialog.show();
     }
@@ -308,25 +391,30 @@ public class MainActivity extends AppCompatActivity {
                 "\n" +
                 "#Supported Sites\n" +
                 "\n" +
-                "Openload\n" +
-                "StreaMango\n" +
-                "RapidVideo\n" +
-                "StreamCherry\n" +
-                "Google Drive\n" +
-                "Google Photos\n" +
-                "Mp4Upload\n" +
-                "Facebook\n" +
-                "Mediafire\n" +
-                "Ok.Ru\n" +
-                "VK\n" +
-                "Twitter\n" +
-                "Youtube\n" +
-                "SolidFiles\n" +
-                "Vidoza\n" +
-                "UptoStream\n" +
-                "SendVid\n" +
-                "FanSubs\n"+
-                "Uptobox\n"+
+                "1. Openload\n" +
+                "2. StreaMango\n" +
+                "3. RapidVideo\n" +
+                "4. StreamCherry\n" +
+                "5. Google Drive\n" +
+                "6. MegaUp\n" +
+                "7. Google Photos\n" +
+                "8. Mp4Upload\n" +
+                "9. Facebook\n" +
+                "10. Mediafire\n" +
+                "11. Ok.Ru\n" +
+                "12. VK\n" +
+                "13. Twitter\n" +
+                "14. Youtube\n" +
+                "15. SolidFiles\n" +
+                "16. Vidoza\n" +
+                "17. UptoStream\n" +
+                "18. SendVid\n" +
+                "19. FanSubs\n" +
+                "20. Uptobox\n" +
+                "21. FEmbed\n" +
+                "22. VeryStream\n" +
+                "23. FileRio\n" +
+                "24. DailyMotion\n" +
                 "\n" +
                 "Github Repo => https://github.com/KhunHtetzNaing/xGetter" +
                 "\n" +
